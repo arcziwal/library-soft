@@ -30,5 +30,12 @@ class Book(models.Model):
     adding_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
 
+    def __str__(self):
+        try:
+            author = self.author.all()
+            print(author)
+            return f"{self.title} - {author[0]}"
+        except IndexError:
+            return f"{self.title}"
 
 

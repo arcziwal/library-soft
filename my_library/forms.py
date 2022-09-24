@@ -2,6 +2,13 @@ from django import forms
 from .models import Author, PublishingHouse
 import library_soft.settings
 
+FACTORS = (
+    (1, 'tytule'),
+    (2, 'autorze'),
+    (3, 'wydawnictwie'),
+    (4, 'ISBN'),
+)
+
 
 class NewAuthorForm(forms.Form):
     first_name = forms.CharField(label="Imię (Imiona):", max_length=64)
@@ -36,5 +43,9 @@ class NewBookForm(forms.Form):
     isbn = forms.CharField(max_length=13, label="Numer ISBN", help_text="8 lub 13 cyfrowy")
     publishing_house = forms.ModelChoiceField(queryset=PublishingHouse.objects.all())
 
+
+class SearchByTitle(forms.Form):
+    title = forms.CharField(label="Wyszukiwana fraza", max_length=128)
+    factors = forms.ChoiceField(label="Wyszukaj po:", choices=FACTORS)
 
 

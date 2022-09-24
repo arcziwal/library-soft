@@ -99,3 +99,23 @@ class NewBook(View):
                 <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
                 """)
 
+
+class SearchByTitle(View):
+    def get(self, request):
+        form = forms.SearchByTitle()
+        return render(request, 'browser.html', {'form': form})
+
+
+class SearchResults(View):
+    def get(self, request):
+        form = forms.SearchByTitle(request.GET)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            factor = form.cleaned_data['factors']
+            if factor == "1":
+                list_of_books = models.Book.objects.filter(title__icontains=title)
+                return render(request, 'search_results.html', {'book_list': list_of_books})
+
+
+
+
