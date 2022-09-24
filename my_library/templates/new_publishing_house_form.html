@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj nowe wydawnictwo</title>
+</head>
+<body>
+    <h2>Nowe wydawnictwo</h2>
+    <form action='/new_publishing_house' method='POST'>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Prześlij">
+    </form>
+</body>
+</html>

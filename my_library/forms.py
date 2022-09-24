@@ -16,3 +16,7 @@ class NewAuthorForm(forms.Form):
         required=False,
         input_formats=library_soft.settings.DATE_INPUT_FORMATS,
     )
+
+
+class NewPublishingHouseForm(forms.Form):
+    name = forms.CharField(label="Nazwa wydawnictwa", max_length=64)

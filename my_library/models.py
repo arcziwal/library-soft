@@ -20,5 +20,10 @@ class Book(models.Model):
     publishing_date = models.DateField(null=True)
     isbn = models.CharField(max_length=13, null=True)
     publishing_house = models.ForeignKey(PublishingHouse, on_delete=models.SET_NULL, null=True)
+    is_borrowed = models.BooleanField(default=False)
+    adding_date = models.DateField(auto_now_add=True)
+    last_modified = models.DateField(auto_now=True)
+    sys_number = models.CharField(max_length=8)
+
 
 

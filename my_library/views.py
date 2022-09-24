@@ -35,6 +35,28 @@ class NewAuthor(View):
                 <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
             """)
         else:
-            return HttpResponse("Błąd! Nie dodano do bazy danych")
+            return HttpResponse("""
+                Błąd! Nie dodano do bazy danych
+                <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
+                """)
 
 
+class NewPublishingHouse(View):
+    def get(self, request):
+        form = forms.NewPublishingHouseForm()
+        return render(request, 'new_publishing_house_form.html', {'form': form})
+
+    def post(self, request):
+        form = forms.NewPublishingHouseForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            pub_house = models.PublishingHouse.objects.create(name=name)
+            return HttpResponse(f"""
+            <p>Wydawnictwo {pub_house.name} zostało dodane do bazy danych</p>
+            <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p>
+            """)
+        else:
+            return HttpResponse("""
+            Błąd! Nie dodano do bazy danych
+            <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
+            """)
