@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.Index.as_view(), name='index-page'),
     path('new_author', views.NewAuthor.as_view(), name='new-author'),
     path('new_publishing_house', views.NewPublishingHouse.as_view(), name='new-publishing-house'),
+    path('new_book', views.NewBook.as_view(), name="new-book"),
 ]

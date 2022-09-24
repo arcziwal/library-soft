@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock title %} | Moja Biblioteka v.0.1</title>
+    <title>Nowa książka</title>
 </head>
-
 <body>
-    <h2>Nowy autor</h2>
-    <form action='/new_author' method='POST'>
+<h2>Nowa książka</h2>
+    <form action='/new_book' method='POST'>
         {% csrf_token %}
         {% for field in form %}
             <div class="fieldWrapper">

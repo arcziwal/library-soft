@@ -60,3 +60,42 @@ class NewPublishingHouse(View):
             Błąd! Nie dodano do bazy danych
             <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
             """)
+
+
+class NewBook(View):
+    def get(self, request):
+        form = forms.NewBookForm()
+        return render(request, 'new_book_form.html', {'form': form})
+
+    def post(self, request):
+        form = forms.NewBookForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            print("Form valid")
+            print(type(form.cleaned_data['author']))
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            num_of_pages = form.cleaned_data['num_of_pages']
+            publishing_year = form.cleaned_data['publishing_date']
+            isbn = form.cleaned_data['isbn']
+            publishing_house = form.cleaned_data['publishing_house']
+            book = models.Book.objects.create(
+                title=title,
+                num_of_pages=num_of_pages,
+                publishing_year=publishing_year,
+                isbn=isbn,
+                publishing_house=publishing_house,
+            )
+            book.author.add(author)
+            book.save()
+            return HttpResponse(f"""
+                Książka {book.title} autorstwa {author} została dodana do bazy danych pod numerem: {book.pk}
+                <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p>
+            """)
+        else:
+            print(form.errors.as_data())
+            return HttpResponse("""
+                Błąd! Nie dodano do bazy danych
+                <p>Naciśnij <a href="/">tutaj</a> aby powrócić na stronę główną</p> 
+                """)
+
