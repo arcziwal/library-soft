@@ -10,8 +10,8 @@
     <h2>Nowy autor</h2>
     <form action='/new_author' method='POST'>
         {% csrf_token %}
-        <label for="first_name">Imię (imiona)</label>
-        <input type="text" name="first_name" id="first_name">
+        {{ form }}
+        <input type="submit" value="Prześlij">
     </form>
 </body>
 </html>
