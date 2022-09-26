@@ -129,6 +129,11 @@ class SearchResults(View):
             return render(request, 'search_results.html', {'book_list': list_of_books, "records_info": records_info})
 
 
-
+class BookDetails(View):
+    def get(self, request, **kwargs):
+        number = kwargs['number']
+        book = models.Book.objects.get(pk=number)
+        author = models.Author.objects.get(book=book)
+        return render(request, 'book_details.html', {'book': book, 'author': author})
 
 
