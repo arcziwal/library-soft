@@ -44,7 +44,7 @@ class NewBookForm(forms.Form):
     publishing_house = forms.ModelChoiceField(queryset=PublishingHouse.objects.all())
 
 
-class SearchByTitle(forms.Form):
+class SearchBook(forms.Form):
     title = forms.CharField(label="Wyszukiwana fraza", max_length=128)
     factors = forms.ChoiceField(label="Wyszukaj po:", choices=FACTORS)
 

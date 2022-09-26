@@ -100,21 +100,34 @@ class NewBook(View):
                 """)
 
 
-class SearchByTitle(View):
+class SearchBook(View):
     def get(self, request):
-        form = forms.SearchByTitle()
+        form = forms.SearchBook()
         return render(request, 'browser.html', {'form': form})
 
 
 class SearchResults(View):
     def get(self, request):
-        form = forms.SearchByTitle(request.GET)
+        form = forms.SearchBook(request.GET)
         if form.is_valid():
-            title = form.cleaned_data['title']
+            phrase = form.cleaned_data['title']
             factor = form.cleaned_data['factors']
             if factor == "1":
-                list_of_books = models.Book.objects.filter(title__icontains=title)
-                return render(request, 'search_results.html', {'book_list': list_of_books})
+                list_of_books = models.Book.objects.filter(title__icontains=phrase)
+            elif factor == "2":
+                list_of_books = models.Book.objects.filter(author__last_name__icontains=phrase)
+            elif factor == "3":
+                list_of_books = models.Book.objects.filter(publishing_house__name__icontains=phrase)
+            elif factor == "4":
+                list_of_books = models.Book.objects.filter(isbn=phrase)
+            else:
+                list_of_books = []
+            if not list_of_books:
+                records_info = "Brak znalezionych rekordów spełniających wyszukiwaną frazę"
+            else:
+                records_info = "Znaleziono następujące rekordy w bazie danych:  "
+            return render(request, 'search_results.html', {'book_list': list_of_books, "records_info": records_info})
+
 
 
 
