@@ -1,5 +1,7 @@
+import uuid
 from operator import mod
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Author(models.Model):
@@ -37,5 +39,31 @@ class Book(models.Model):
             return f"{self.title} - {author[0]}"
         except IndexError:
             return f"{self.title}"
+
+
+class LibraryUser(models.Model):
+    first_name = models.CharField(max_length=64)
+    last_name = models.CharField(max_length=64)
+    user_id = models.UUIDField(default=uuid.uuid4(), editable=False, unique=True)
+    django_user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    borrowed_books = models.ManyToManyField(Book, through='BorrowedBooks', null=True, related_name='borrowed_books')
+    reserved_books = models.ManyToManyField(Book, through='ReservedBooks', null=True, related_name='reserved_books')
+    creation_date = models.DateField(auto_now_add=True)
+
+
+class BorrowedBooks(models.Model):
+    borrow_date = models.DateField(auto_now_add=True)
+    bor_user = models.ForeignKey(LibraryUser, on_delete=models.SET_NULL, related_name='bor_users', null=True)
+    bor_book = models.ForeignKey(Book, on_delete=models.SET_NULL, related_name='bor_books', null=True)
+
+
+class ReservedBooks(models.Model):
+    reserve_date = models.DateField(auto_now_add=True)
+    res_user = models.ForeignKey(LibraryUser, on_delete=models.SET_NULL, related_name='res_users', null=True)
+    res_book = models.ForeignKey(Book, on_delete=models.SET_NULL, related_name='res_books', null=True)
+
+
+
+
 
 
