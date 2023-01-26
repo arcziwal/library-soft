@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wyszukiwarka</title>
-</head>
-<body>
+{% extends "__base__.html" %}
+
+{% block title %}Wyszukaj książkę{% endblock %}
+
+{% block content %}
     <h2>Wyszukiwanie książki</h2>
     <form action='/book/results' method='GET'>
         {% csrf_token %}
@@ -16,5 +14,4 @@
         {% endfor %}
         <input type="submit" value="Wyszukaj">
     </form>
-</body>
-</html>
+{% endblock %}

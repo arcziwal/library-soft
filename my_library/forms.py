@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Author, PublishingHouse
 import library_soft.settings
 
@@ -48,4 +50,23 @@ class SearchBook(forms.Form):
     title = forms.CharField(label="Wyszukiwana fraza", max_length=128)
     factors = forms.ChoiceField(label="Wyszukaj po:", choices=FACTORS)
 
+
+class NewUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+        help_texts = {
+            'username': 'Login do posługiwania się na stronie. Max. 30 znaków',
+            'password': 'min. 8 znaków',
+            'password2': 'Potwierdź hasło',
+        }
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
 

@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wyniki wyszukiwania</title>
-</head>
-<body>
+{% extends "__base__.html" %}
+
+{% block title %}Wyniki wyszukiwania{% endblock %}
+
+{% block content %}
     <h2>{{ records_info }}</h2>
     <ol>
       {% for book in book_list %}
@@ -12,5 +10,4 @@
       {% endfor %}
     </ol>
     <p>Kliknij <a href="/">TUTAJ</a> aby powrócić na stronę główną</p>
-</body>
-</html>
+{% endblock %}

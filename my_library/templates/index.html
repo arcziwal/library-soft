@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock title %} | Moja Biblioteka v.0.1</title>
-</head>
+{% extends "__base__.html" %}
 
-<body>
+{% block title %}Bibliotheca v.0.1{% endblock %}
+
+{% block content %}
 <h1>Hello</h1>
 <h2>Dostępne funkcje:</h2>
 <ol>
@@ -15,5 +11,4 @@
     <li>Aby dodać nową książkę do bazy danych, naciśnij <a href="/new_book">TUTAJ</a></li>
     <li>Aby wyszukać książkę naciśnij <a href="/book/search">TUTAJ</a></li>
 </ol>
-</body>
-</html>
+{% endblock %}

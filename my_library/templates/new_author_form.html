@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock title %} | Moja Biblioteka v.0.1</title>
-</head>
+{% extends "__base__.html" %}
 
-<body>
+{% block title %}Dodaj nowego autora{% endblock %}
+
+{% block content %}
     <h2>Nowy autor</h2>
     <form action='/new_author' method='POST'>
         {% csrf_token %}
@@ -18,5 +14,4 @@
         {% endfor %}
         <input type="submit" value="Prześlij">
     </form>
-</body>
-</html>
+{% endblock %}

@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ book.title }} - {{ author }}</title>
-</head>
-<body>
+{% extends "__base__.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
     <h1>{{ book.title }}</h1>
     <h3>{{ author }}</h3><br>
 
@@ -23,5 +20,4 @@
     <br><br>
     <p>Naciśnij <a href="/">TUTAJ</a> aby powrócić na stronę główną</p>
     <p>Naciśnij <a onclick="history.back()" href="">TUTAJ</a>, aby powrócić do wyników wyszukiwania
-</body>
-</html>
+{% endblock %}

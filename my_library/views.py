@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
 from . import forms, models
+
 
 
 class Index(View):
@@ -137,3 +141,51 @@ class BookDetails(View):
         return render(request, 'book_details.html', {'book': book, 'author': author})
 
 
+class CreateUser(View):
+    def get(self, request):
+        form = forms.NewUserForm()
+        return render(request, 'register_form.html', {'register_form': form})
+
+    def post(self, request):
+        form = forms.NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Pomyślnie zarejstrowano")
+            return redirect("index-page")
+        messages.error(request, "Operacja nieudana. Nieprawidłowe dane")
+
+
+class LoginRequest(View):
+    def get(self, request):
+        form = AuthenticationForm()
+        return render(request, template_name='login.html', context={'login_form': form})
+
+    def post(self, request):
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"Użytkownik {username} został poprawnie zalogowany")
+                return redirect('index-page')
+            else:
+                messages.error(request, "Błędny login lub hasło")
+                return redirect('/login')
+        else:
+            messages.error(request, "Błędny login lub hasło")
+            return redirect('/login')
+
+
+class LogoutRequest(View):
+    def get(self, request):
+        logout(request)
+        messages.info(request, "Zostałeś prawidłowo wylogowany")
+        return redirect("/login")
+
+
+class UserDetails(View):
+    def get(self, request):
+        return render(request, template_name="user_details.html", context={})
